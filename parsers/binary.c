@@ -17,12 +17,27 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+#ifdef _WIN32
+#define _CRT_SECURE_NO_WARNINGS
+#endif
 
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#ifndef _WIN32
 #include <unistd.h>
+#endif
 #include <stdlib.h>
+
+#ifdef _WIN32
+#include <io.h>
+typedef int ssize_t;
+#define __WIN32__
+#define open _open
+#define close _close
+#define read _read
+#define write _write
+#endif
 
 #include "binary.h"
 

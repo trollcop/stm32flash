@@ -17,14 +17,28 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+#ifdef _WIN32
+#define _CRT_SECURE_NO_WARNINGS
+#endif
 
 #include <sys/types.h>
 #include <fcntl.h>
+#ifndef _WIN32
 #include <unistd.h>
+#endif
 #include <stdlib.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
+
+#ifdef _WIN32
+/* For open() etc */
+#include <io.h>
+#define open _open
+#define close _close
+#define read _read
+#define write _write
+#endif
 
 #include "hex.h"
 #include "../compiler.h"
@@ -248,4 +262,3 @@ parser_t PARSER_HEX = {
 	hex_read,
 	hex_write
 };
-
